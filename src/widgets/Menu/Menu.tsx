@@ -122,26 +122,6 @@ const Menu: React.FC<NavProps> = ({
           isDark={isDark}
           href={homeLink?.href ?? "/"}
         />
-        <Dropdown
-          position="top-right"
-          target={
-            <Button variant="text" startIcon={<LanguageIcon color="textSubtle" width="24px" />}>
-              <Text color="textSubtle">{currentLang?.toUpperCase()}</Text>
-            </Button>
-          }
-        >
-          {langs.map((lang) => (
-            <MenuButton
-              key={lang.code}
-              fullWidth
-              onClick={() => setLang(lang)}
-              // Safari fix
-              style={{ minHeight: "32px", height: "auto" }}
-            >
-              {lang.language}
-            </MenuButton>
-          ))}
-        </Dropdown>
         <Flex>
           <UserBlock account={account} login={login} logout={logout} />
           {profile && <Avatar profile={profile} />}
