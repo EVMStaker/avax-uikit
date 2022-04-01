@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
+import { PancakeRoundIcon, CogIcon, SvgProps } from "../../components/Svg";
 import throttle from "lodash/throttle";
 import Overlay from "../../components/Overlay/Overlay";
 import { Flex } from "../../components/Flex";
@@ -12,12 +13,16 @@ import { NavProps } from "./types";
 import { MENU_HEIGHT, SIDEBAR_WIDTH_REDUCED, SIDEBAR_WIDTH_FULL } from "./config";
 import Avatar from "./Avatar";
 import MenuButton from "./MenuButton";
+import * as IconModule from "./icons";
+import Dropdown from "../../components/Dropdown/Dropdown";
+import Text from "../../components/Text/Text";
 
 const Wrapper = styled.div`
   position: relative;
   width: 100%;
 `;
-
+const Icons = (IconModule as unknown) as { [key: string]: React.FC<SvgProps> };
+const { MoonIcon, SunIcon, LanguageIcon } = Icons;
 const StyledNav = styled.nav`
   position: fixed;
   left: 0;
@@ -117,7 +122,15 @@ const Menu: React.FC<NavProps> = ({
           isDark={isDark}
           href={homeLink?.href ?? "/"}
         />
-        {langs.map((lang) => (
+        <Dropdown
+          position="top-right"
+          target={
+            <Button variant="text" startIcon={<LanguageIcon color="textSubtle" width="24px" />}>
+              <Text color="textSubtle">{currentLang?.toUpperCase()}</Text>
+            </Button>
+          }
+        >
+          {langs.map((lang) => (
             <MenuButton
               key={lang.code}
               fullWidth
@@ -128,6 +141,7 @@ const Menu: React.FC<NavProps> = ({
               {lang.language}
             </MenuButton>
           ))}
+        </Dropdown>
         <Flex>
           <UserBlock account={account} login={login} logout={logout} />
           {profile && <Avatar profile={profile} />}
