@@ -11,6 +11,7 @@ import UserBlock from "./UserBlock";
 import { NavProps } from "./types";
 import { MENU_HEIGHT, SIDEBAR_WIDTH_REDUCED, SIDEBAR_WIDTH_FULL } from "./config";
 import Avatar from "./Avatar";
+import MenuButton from "./MenuButton";
 
 const Wrapper = styled.div`
   position: relative;
@@ -116,6 +117,17 @@ const Menu: React.FC<NavProps> = ({
           isDark={isDark}
           href={homeLink?.href ?? "/"}
         />
+        {langs.map((lang) => (
+            <MenuButton
+              key={lang.code}
+              fullWidth
+              onClick={() => setLang(lang)}
+              // Safari fix
+              style={{ minHeight: "32px", height: "auto" }}
+            >
+              {lang.language}
+            </MenuButton>
+          ))}
         <Flex>
           <UserBlock account={account} login={login} logout={logout} />
           {profile && <Avatar profile={profile} />}
